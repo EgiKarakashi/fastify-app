@@ -1,4 +1,10 @@
-let todos = require('../Todo')
+const {
+    getTodo,
+    getTodos,
+    postTodo,
+    updatedTodo,
+    deleteTodo
+} = require('../controllers/todos')
 
 const Todo = {
     type: 'object',
@@ -20,43 +26,20 @@ const getTodosOpts = {
         response: {
             200: {
                 type: 'array',
-                todos: {
-                    type: 'object',
-                    properties: {
-                        id: {
-                            type: 'string'
-                        }, 
-                        name: {
-                            type: 'string'
-                        },
-                        description: {
-                            type: 'string'
-                        }
-                    }
-                }
+                todos: Todo
             }
         }
-    }
+    },
+    handler: getTodos
 }
 
 const getTodoOpts = {
     schema: {
         response: {
-            200: {
-                properties: {
-                    id: {
-                        type: 'string'
-                    },
-                    name: {
-                        type: 'string'
-                    },
-                    description: {
-                        type: 'string'
-                    }
-                }
-            }
+            200: Todo
         }
-    }
+    },
+    handler: getTodo
 }
 
 const postTodoOpts = {
@@ -72,7 +55,8 @@ const postTodoOpts = {
             response: {
             201: Todo
         }
-    }
+    },
+    handler: postTodo
 }
 
 const updateTodoOpts = {
@@ -92,7 +76,8 @@ const updateTodoOpts = {
         response: {
             200: Todo
         }
-    }
+    },
+    handler: updatedTodo
 }
 
 const deleteTodoOpts = {
@@ -105,45 +90,21 @@ const deleteTodoOpts = {
                 }
             }
         }
-    }
+    },
+    handler: deleteTodo
 }
 
 
 const todoRoute = (fastify, options, done) => {
-    fastify.get('/', getTodosOpts, function(request, reply) {
-        reply.send(todos)
-    })
+    fastify.get('/', getTodosOpts)
 
-    fastify.get('/:id', getTodoOpts, function(request, reply) {
-        const {id} = request.params
-        const todo = todos.find((todo) => todo.id === id)
+    fastify.get('/:id', getTodoOpts)
 
-        reply.send(todo)
-    })
+    fastify.post('/', postTodoOpts)
 
-    fastify.post('/',postTodoOpts, function(request, reply) {
-        const {name, description} = request.body
-        const todo = {id: String(todos.length + 1), name, description}
-        todos.push(todo)
-        reply.code(201).send(todo)
+    fastify.put('/:id', updateTodoOpts)
 
-    })
-
-    fastify.put('/:id', updateTodoOpts, function(request, reply) {
-        const {id} = request.params
-        const {name, description} = request.body
-        const todo = todos.find((todo) => todo.id === id)
-        todo.name = name
-        todo.description = description
-        reply.send(todo)
-
-    })
-
-    fastify.delete('/:id', deleteTodoOpts, function(request, reply) {
-        const {id} = request.params
-        todos = todos.filter((todo) => todo.id !== id)
-        reply.send(`Item with ${id} got deleted!`)
-    })
+    fastify.delete('/:id', deleteTodoOpts)
 
     done()
 }
