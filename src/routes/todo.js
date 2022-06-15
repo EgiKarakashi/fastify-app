@@ -1,112 +1,111 @@
 const {
-    getTodo,
-    getTodos,
-    postTodo,
-    updatedTodo,
-    deleteTodo
-} = require('../controllers/todos')
+  getTodo,
+  getTodos,
+  postTodo,
+  updatedTodo,
+  deleteTodo,
+} = require("../controllers/todos");
 
 const Todo = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        name: {
-            type: 'string'
-        },
-        description: {
-            type: 'string'
-        }
-    }
-}
+  type: "object",
+  properties: {
+    id: {
+      type: "string",
+    },
+    name: {
+      type: "string",
+    },
+    description: {
+      type: "string",
+    },
+  },
+};
 
 const getTodosOpts = {
-    schema: {
-        response: {
-            200: {
-                type: 'array',
-                todos: Todo
-            }
-        }
+  schema: {
+    response: {
+      200: {
+        type: "array",
+        todos: Todo,
+      },
     },
-    handler: getTodos
-}
+  },
+  handler: getTodos,
+};
 
 const getTodoOpts = {
-    schema: {
-        response: {
-            200: Todo
-        }
+  schema: {
+    response: {
+      200: Todo,
     },
-    handler: getTodo
-}
+  },
+  handler: getTodo,
+};
 
 const postTodoOpts = {
-    schema: {
-        body: {
-            type: 'object',
-            required: ['name', 'description'],
-            properties: {
-                name: { type: 'string' },
-                description: { type: 'string' }
-            }
-        },
-            response: {
-            201: Todo
-        }
+  schema: {
+    body: {
+      type: "object",
+      required: ["name", "description"],
+      properties: {
+        name: { type: "string" },
+        description: { type: "string" },
+      },
     },
-    handler: postTodo
-}
+    response: {
+      201: Todo,
+    },
+  },
+  handler: postTodo,
+};
 
 const updateTodoOpts = {
-    schema: {
-        body: {
-            type: 'object',
-            required: ['name', 'description'],
-            properties: {
-                name: {
-                    type: 'string'
-                },
-                description: {
-                    type: 'string'
-                }
-            }
+  schema: {
+    body: {
+      type: "object",
+      required: ["name", "description"],
+      properties: {
+        name: {
+          type: "string",
         },
-        response: {
-            200: Todo
-        }
+        description: {
+          type: "string",
+        },
+      },
     },
-    handler: updatedTodo
-}
+    response: {
+      200: Todo,
+    },
+  },
+  handler: updatedTodo,
+};
 
 const deleteTodoOpts = {
-    schema: {
-        response: {
-            200: {
-                type: 'object',
-                properties: {
-                    message: {type: 'string'},
-                }
-            }
-        }
+  schema: {
+    response: {
+      200: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+        },
+      },
     },
-    handler: deleteTodo
-}
-
+  },
+  handler: deleteTodo,
+};
 
 const todoRoute = (fastify, options, done) => {
-    fastify.get('/', getTodosOpts)
+  fastify.get("/", getTodosOpts);
 
-    fastify.get('/:id', getTodoOpts)
+  fastify.get("/:id", getTodoOpts);
 
-    fastify.post('/', postTodoOpts)
+  fastify.post("/", postTodoOpts);
 
-    fastify.put('/:id', updateTodoOpts)
+  fastify.put("/:id", updateTodoOpts);
 
-    fastify.delete('/:id', deleteTodoOpts)
+  fastify.delete("/:id", deleteTodoOpts);
 
-    done()
-}
+  done();
+};
 
-module.exports = {todoRoute}
+module.exports = { todoRoute };
