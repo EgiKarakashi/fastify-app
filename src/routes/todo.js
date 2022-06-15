@@ -130,8 +130,8 @@ const todoRoute = (fastify, options, done) => {
     })
 
     fastify.put('/:id', updateTodoOpts, function(request, reply) {
-        const{id} = request.params
-        const{name, description} = request.body
+        const {id} = request.params
+        const {name, description} = request.body
         const todo = todos.find((todo) => todo.id === id)
         todo.name = name
         todo.description = description
