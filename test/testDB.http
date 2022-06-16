@@ -1,0 +1,30 @@
+### Get all Todos
+GET http://127.0.0.1:3000/v2 HTTP/1.1
+
+### Get Todo by ID
+GET http://127.0.0.1:3000/v2/1 HTTP/1.1
+
+### Post new Todo
+POST  http://localhost:3000/v2 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Hello World",
+    "description": "Heewlloooo"
+}
+
+### Update Todo by ID
+PUT  http://localhost:3000/v2/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Updated Todo",
+    "description": "Heewlloo000000oo"
+}
+
+### Delete Todo by ID
+DELETE   http://localhost:3000/v2/1 HTTP/1.1
+
+
+### DB test
+GET http://localhost:3000/time HTTP/1.1

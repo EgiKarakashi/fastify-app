@@ -1,5 +1,5 @@
 ### Get all Todos
-GET http://localhost:3000 HTTP/1.1
+GET http://127.0.0.1:3000 HTTP/1.1
 
 ### Get Todo by ID
 GET http://127.0.0.1:3000/3 HTTP/1.1
@@ -26,5 +26,6 @@ Content-Type: application/json
 DELETE   http://localhost:3000/1 HTTP/1.1
 
 
-
+### DB test
+GET http://localhost:3000 HTTP/1.1
 
