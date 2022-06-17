@@ -1,13 +1,11 @@
-const { build } = require("../src/app");
-const env = require("../src/config/env");
+const { build } = require('../src/app');
+const env = require('../src/config/env');
 
-const createTableSQL =
-  "CREATE TABLE IF NOT EXISTS todos (id SERIAL,name VARCHAR(200),description VARCHAR(500))";
+const createTableSQL = 'CREATE TABLE IF NOT EXISTS todos (id SERIAL,name VARCHAR(200),description VARCHAR(500))';
 
-const clearDatabaseSQL = "DELETE FROM todos";
+const clearDatabaseSQL = 'DELETE FROM todos';
 
-const insertFakeItemSQL =
-  "INSERT INTO todos (name, description) VALUES ($1,$2)";
+const insertFakeItemSQL = 'INSERT INTO todos (name, description) VALUES ($1,$2)';
 
 module.exports = function setupTestEnv() {
   const app = build(
@@ -17,7 +15,7 @@ module.exports = function setupTestEnv() {
     {},
     {
       connectionString: env.POSTGRES_TEST_DB_CONNECTION_STRING,
-    }
+    },
   );
   beforeAll(async () => {
     await app.ready();
@@ -26,7 +24,7 @@ module.exports = function setupTestEnv() {
   });
 
   beforeEach(async () => {
-    await app.pg.query(insertFakeItemSQL, ["Test todo", "This is a test todo"]);
+    await app.pg.query(insertFakeItemSQL, ['Test todo', 'This is a test todo']);
   });
 
   afterEach(async () => {
