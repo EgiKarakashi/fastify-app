@@ -2,7 +2,7 @@ const fastify = require("fastify");
 const fastifySwagger = require("@fastify/swagger");
 const fastifyPostgres = require("@fastify/postgres");
 
-const { todoRoute } = require("./routes/todo");
+const { todoRoute } = require("./routes/v1/todo");
 const { todoRoute_v2 } = require("./routes/v2/todo");
 
 const build = (opts = {}, optSwagger = {}, optPostgres = {}) => {

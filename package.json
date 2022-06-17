@@ -15,6 +15,8 @@
   "dependencies": {
     "@fastify/postgres": "^5.0.0",
     "@fastify/swagger": "^7.3.0",
+    "dotenv": "^16.0.1",
+    "envalid": "^7.3.1",
     "fastify": "^4.0.2",
     "jest": "^28.1.1",
     "nodemon": "^2.0.16",

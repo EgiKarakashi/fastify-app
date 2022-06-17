@@ -1,4 +1,5 @@
 const { build } = require("./app");
+const env = require("./config/env");
 
 const app = build(
   { logger: true },
@@ -8,7 +9,7 @@ const app = build(
     swagger: { info: { title: "Fastfify Swagger API", version: "1.0.1" } },
   },
   {
-    connectionString: "postgres://postgres:postgres@localhost:5432/postgres",
+    connectionString: env.POSTGRES_DB_CONNECTION_STRING,
   }
 );
 
@@ -25,7 +26,7 @@ app.get("/time", function (request, reply) {
   }
 });
 
-app.listen(3000, function (err, address) {
+app.listen(env.WEB_APP_HOST, "0.0.0.0", function (err, address) {
   if (err) {
     app.log.error(err);
     process.exit(1);

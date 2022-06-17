@@ -1,12 +1,13 @@
 const { build } = require("../src/app");
+const env = require("../src/config/env");
 
 const createTableSQL =
-  "CREATE TABLE IF NOT EXITS Items (id SERIAL,name VARCHAR(200),description VARCHAR(500))";
+  "CREATE TABLE IF NOT EXISTS todos (id SERIAL,name VARCHAR(200),description VARCHAR(500))";
 
-const clearDatabaseSQL = "DELETE FROM test_todo";
+const clearDatabaseSQL = "DELETE FROM todos";
 
 const insertFakeItemSQL =
-  "INSERT INTO test_todo (name, description) VALUES ($1,$2)";
+  "INSERT INTO todos (name, description) VALUES ($1,$2)";
 
 module.exports = function setupTestEnv() {
   const app = build(
@@ -15,8 +16,7 @@ module.exports = function setupTestEnv() {
     },
     {},
     {
-      connectionString:
-        "postgres://postgres:postgres@localhost:5432/postgres_test",
+      connectionString: env.POSTGRES_TEST_DB_CONNECTION_STRING,
     }
   );
   beforeAll(async () => {
@@ -26,16 +26,11 @@ module.exports = function setupTestEnv() {
   });
 
   beforeEach(async () => {
-    await app.pg.query(insertFakeItemSQl, [
-      "Test item",
-      "This is a test item",
-      "New Todo from test",
-      "New todo description",
-    ]);
+    await app.pg.query(insertFakeItemSQL, ["Test todo", "This is a test todo"]);
   });
 
   afterEach(async () => {
-    await app.pg.query(clearTableSQl);
+    await app.pg.query(clearDatabaseSQL);
   });
 
   afterAll(async () => {
